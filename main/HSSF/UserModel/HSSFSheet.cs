@@ -190,7 +190,7 @@ namespace NPOI.HSSF.UserModel
                         if (rowRecordsAlreadyPresent)
                         {
                             // if at least one row record is present, all should be present.
-                            throw new Exception("Unexpected missing row when some rows already present, the file is wrong");
+                            //throw new Exception("Unexpected missing row when some rows already present, the file is wrong");
                         }
                         // Create the row record on the fly now.
                         RowRecord rowRec = new RowRecord(cval.Row);
