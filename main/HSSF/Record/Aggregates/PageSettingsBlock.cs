@@ -181,8 +181,8 @@ namespace NPOI.HSSF.Record.Aggregates
         {
             if (rec != null)
             {
-                throw new RecordFormatException("Duplicate PageSettingsBlock record (sid=0x"
-                        + StringUtil.ToHexString(rec.Sid) + ")");
+                //throw new RecordFormatException("Duplicate PageSettingsBlock record (sid=0x"
+                  //      + StringUtil.ToHexString(rec.Sid) + ")");
             }
         }
         private PageBreakRecord RowBreaksRecord
