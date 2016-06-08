@@ -55,7 +55,10 @@ namespace NPOI.HSSF.Record
         public DeltaRecord(RecordInputStream in1)
         {
             field_1_max_change = in1.ReadDouble();
-            in1.ReadDouble();
+            if(in1.Remaining > 0) // support malformed record
+            {
+                in1.ReadDouble();
+            }
         }
 
 
@@ -93,7 +96,7 @@ namespace NPOI.HSSF.Record
 
         protected override int DataSize
         {
-            get { return 16; }
+            get { return 8; }
         }
 
         public override short Sid
