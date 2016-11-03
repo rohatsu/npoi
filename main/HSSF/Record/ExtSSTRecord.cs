@@ -73,10 +73,10 @@ namespace NPOI.HSSF.Record
                 InfoSubRecord info = new InfoSubRecord(in1);
                 lst.Add(info);
 
-                if (in1.Available() == 0 && in1.HasNextRecord && in1.GetNextSid() == ContinueRecord.sid)
-                {
-                    in1.NextRecord();
-                }
+                /*if (in1.Available() == 0 && in1.HasNextRecord && in1.GetNextSid() == ContinueRecord.sid)
+                {                    
+                    in1.NextRecord(); // if continue, it contiues sst record
+                }*/
             }
             _sstInfos = lst.ToArray();
         }
