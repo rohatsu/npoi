@@ -108,7 +108,7 @@ namespace NPOI.POIFS.FileSystem
         /// stream in order to trap the Close() call.  
         /// </summary>
         /// <param name="stream">the Streamfrom which to Read the data</param>
-        public POIFSFileSystem(Stream stream)
+        public POIFSFileSystem(Stream stream, bool legacy = false)
             : this()
         {
             bool success = false;
@@ -144,8 +144,17 @@ namespace NPOI.POIFS.FileSystem
             PropertyTable properties = new PropertyTable(header_block_reader, data_blocks);
 
             // init documents
-            ProcessProperties(SmallBlockTableReader.GetSmallDocumentBlocks(bigBlockSize, data_blocks, properties.Root, header_block_reader.SBATStart),
-                                data_blocks, properties.Root.Children, null, header_block_reader.PropertyStart);
+            if (legacy)
+            {
+                var data_blocks_copy = data_blocks.Clone();
+                ProcessProperties(null/*SmallBlockTableReader.GetSmallDocumentBlocks(bigBlockSize, data_blocks, properties.Root, header_block_reader.SBATStart)*/,
+                                    data_blocks_copy, properties.Root.Children, null, header_block_reader.PropertyStart);
+            }
+            else
+            {
+                ProcessProperties(SmallBlockTableReader.GetSmallDocumentBlocks(bigBlockSize, data_blocks, properties.Root, header_block_reader.SBATStart),
+                                    data_blocks, properties.Root.Children, null, header_block_reader.PropertyStart);
+            }
 
             // For whatever reason CLSID of root is always 0.
             Root.StorageClsid = (properties.Root.StorageClsid);

@@ -63,5 +63,23 @@ namespace NPOI.POIFS.Storage
             }
              SetBlocks((ListManagedBlock[])blocks.ToArray());
         }
+
+        private RawDataBlockList()
+        {
+
+        }
+
+        public RawDataBlockList Clone()
+        {
+            var bl = new RawDataBlockList();
+            bl.BAT = this.BAT;
+            var blist = new ListManagedBlock[this.RemainingBlocks()];
+            for(int i = 0; i < this.RemainingBlocks(); i++)
+            {
+                blist[i] = Get(i);
+            }
+            bl.SetBlocks(blist);
+            return bl;
+        }
     }
 }

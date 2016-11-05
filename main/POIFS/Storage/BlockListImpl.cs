@@ -115,6 +115,10 @@ namespace NPOI.POIFS.Storage
         /// <value>the associated BlockAllocationTable</value>
         public virtual BlockAllocationTableReader BAT
         {
+            get
+            {
+                return _bat;
+            }
             set
         {
                 if (_bat != null)
