@@ -173,10 +173,10 @@ namespace NPOI.XSSF.UserModel
         /**
          * Constructs a XSSFWorkbook object given a OpenXML4J <code>Package</code> object,
          *  see <a href="http://poi.apache.org/oxml4j/">http://poi.apache.org/oxml4j/</a>.
-         * 
+         *
          * Once you have finished working with the Workbook, you should close the package
          * by calling pkg.close, to avoid leaving file handles open.
-         * 
+         *
          * Creating a XSSFWorkbook from a file-backed OPC Package has a lower memory
          *  footprint than an InputStream backed one.
          *
@@ -201,7 +201,7 @@ namespace NPOI.XSSF.UserModel
         /**
          * Constructs a XSSFWorkbook object, by buffering the whole stream into memory
          *  and then opening an {@link OPCPackage} object for it.
-         * 
+         *
          * Using an {@link InputStream} requires more memory than using a File, so
          *  if a {@link File} is available then you should instead do something like
          *   <pre><code>
@@ -210,7 +210,7 @@ namespace NPOI.XSSF.UserModel
          *       // work with the wb object
          *       ......
          *       pkg.close(); // gracefully closes the underlying zip file
-         *   </code></pre>     
+         *   </code></pre>
          */
         public XSSFWorkbook(Stream is1)
             : base(PackageHelper.Open(is1))
@@ -231,14 +231,14 @@ namespace NPOI.XSSF.UserModel
 
         /**
          * Constructs a XSSFWorkbook object from a given file.
-         * 
-         * <p>Once you have finished working with the Workbook, you should close 
-         * the package by calling  {@link #close()}, to avoid leaving file 
+         *
+         * <p>Once you have finished working with the Workbook, you should close
+         * the package by calling  {@link #close()}, to avoid leaving file
          * handles open.
-         * 
-         * <p>Opening a XSSFWorkbook from a file has a lower memory footprint 
+         *
+         * <p>Opening a XSSFWorkbook from a file has a lower memory footprint
          *  than opening from an InputStream
-         *  
+         *
          * @param file   the file to open
          */
         public XSSFWorkbook(FileInfo file)
@@ -264,7 +264,7 @@ namespace NPOI.XSSF.UserModel
          *     then pass the data to ZipInputStream.
          *     </li>
          * <ol>
-         * <p>    
+         * <p>
          *     It should be noted, that (2) uses quite a bit more memory than (1), which
          *      doesn't need to hold the whole zip file in memory, and can take advantage
          *      of native methods.
@@ -278,9 +278,9 @@ namespace NPOI.XSSF.UserModel
          *       // work with the wb object
          *       ......
          *       pkg.close(); // gracefully closes the underlying zip file
-         *   </code></pre>     
+         *   </code></pre>
          * </p>
-         * 
+         *
          * @param      path   the file name.
          */
         public XSSFWorkbook(String path)
@@ -376,7 +376,7 @@ namespace NPOI.XSSF.UserModel
                     sh.OnDocumentRead();
                     sheets.Add(sh);
                 }
-                // Load the external links tables. Their order is defined by the order 
+                // Load the external links tables. Their order is defined by the order
                 //  of CTExternalReference elements in the workbook
                 externalLinks = new List<ExternalLinksTable>(elIdMap.Count);
                 if (this.workbook.IsSetExternalReferences())
@@ -1018,9 +1018,9 @@ namespace NPOI.XSSF.UserModel
             throw new ArgumentException("Named range was not found: " + name);
         }
         /**
-         * As {@link #removeName(String)} is not necessarily unique 
+         * As {@link #removeName(String)} is not necessarily unique
          * (name + sheet index is unique), this method is more accurate.
-         * 
+         *
          * @param name the name to remove.
          */
         public void RemoveName(XSSFName name)
@@ -1040,7 +1040,7 @@ namespace NPOI.XSSF.UserModel
             int cont = 0;
             foreach (XSSFName name in namedRanges)
             {
-                if (name.NameName.Equals(XSSFName.BUILTIN_PRINT_AREA) 
+                if (name.NameName.Equals(XSSFName.BUILTIN_PRINT_AREA)
                     && name.SheetIndex == sheetIndex)
                 {
                     namedRanges.RemoveAt(cont);
@@ -1122,7 +1122,7 @@ namespace NPOI.XSSF.UserModel
             //adjust indices of names ranges
             foreach (XSSFName nm in namedRanges)
             {
-                
+
                 CT_DefinedName ct = nm.GetCTName();
                 if (!ct.IsSetLocalSheetId()) continue;
                 if (ct.localSheetId == index)
@@ -1154,7 +1154,7 @@ namespace NPOI.XSSF.UserModel
             {
                 return _missingCellPolicy;
             }
-            set 
+            set
             {
                 _missingCellPolicy = value;
             }
@@ -1195,7 +1195,7 @@ namespace NPOI.XSSF.UserModel
                 CT_BookView bookView = bookViews.GetWorkbookViewArray(0);
                 return (int)bookView.firstSheet;
             }
-            set 
+            set
             {
                 CT_BookViews bookViews = workbook.bookViews;
                 CT_BookView bookView = bookViews.GetWorkbookViewArray(0);
@@ -1622,7 +1622,7 @@ namespace NPOI.XSSF.UserModel
         internal bool IsDate1904()
         {
             CT_WorkbookPr workbookPr = workbook.workbookPr;
-            return workbookPr.date1904Specified && workbookPr.date1904;
+            return workbookPr != null && workbookPr.date1904Specified && workbookPr.date1904;
         }
 
         /**
@@ -1653,7 +1653,7 @@ namespace NPOI.XSSF.UserModel
             {
                 throw new NotImplementedException();
             }
-            set 
+            set
             {
                 throw new NotImplementedException();
             }
@@ -1775,7 +1775,7 @@ namespace NPOI.XSSF.UserModel
 
         /**
          * Returns the list of {@link ExternalLinksTable} object for this workbook
-         * 
+         *
          * <p>The external links table specifies details of named ranges etc
          *  that are referenced from other workbooks, along with the last seen
          *  values of what they point to.</p>
@@ -1814,9 +1814,9 @@ namespace NPOI.XSSF.UserModel
         }
 
         /**
-         * Adds the External Link Table part and relations required to allow formulas 
+         * Adds the External Link Table part and relations required to allow formulas
          *  referencing the specified external workbook to be added to this one. Allows
-         *  formulas such as "[MyOtherWorkbook.xlsx]Sheet3!$A$5" to be added to the 
+         *  formulas such as "[MyOtherWorkbook.xlsx]Sheet3!$A$5" to be added to the
          *  file, for workbooks not already linked / referenced.
          *
          * @param name The name the workbook will be referenced as in formulas
@@ -1831,7 +1831,7 @@ namespace NPOI.XSSF.UserModel
          * A value true indicates the structure of the workbook is locked. Worksheets in the workbook can't be Moved,
          * deleted, hidden, unhidden, or Renamed, and new worksheets can't be inserted.<br/>
          * A value of false indicates the structure of the workbook is not locked.<br/>
-         * 
+         *
          * @return true if structure of workbook is locked
          */
         public bool IsStructureLocked()
@@ -1844,7 +1844,7 @@ namespace NPOI.XSSF.UserModel
          * A value of true indicates the workbook windows are locked. Windows are the same size and position each time the
          * workbook is opened.<br/>
          * A value of false indicates the workbook windows are not locked.
-         * 
+         *
          * @return true if windows that comprise the workbook are locked
          */
         public bool IsWindowsLocked()
@@ -1854,7 +1854,7 @@ namespace NPOI.XSSF.UserModel
 
         /**
          * Specifies a bool value that indicates whether the workbook is locked for revisions.
-         * 
+         *
          * @return true if the workbook is locked for revisions.
          */
         public bool IsRevisionLocked()
@@ -1881,7 +1881,7 @@ namespace NPOI.XSSF.UserModel
         }
 
         /**
-         * Locks the windows that comprise the workbook. 
+         * Locks the windows that comprise the workbook.
          */
         public void LockWindows()
         {
@@ -1890,7 +1890,7 @@ namespace NPOI.XSSF.UserModel
         }
 
         /**
-         * Unlocks the windows that comprise the workbook. 
+         * Unlocks the windows that comprise the workbook.
          */
         public void UnlockWindows()
         {
@@ -2003,7 +2003,7 @@ namespace NPOI.XSSF.UserModel
         {
             ValidateSheetIndex(sheetIndex);
 
-            
+
             foreach (CT_BookView arrayBook in workbook.bookViews.workbookView)
             {
                 arrayBook.activeTab = (uint)(sheetIndex);
