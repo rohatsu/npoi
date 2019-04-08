@@ -152,3 +152,7 @@ $RECYCLE.BIN/
 
 # Examples packages folder
 examples/packages
+npoi_test/
+solution/visualstudio/.vs/
+solution/visualstudio2012/.vs/
+*.stackdump
